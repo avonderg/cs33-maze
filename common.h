@@ -21,7 +21,11 @@ typedef enum { NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3 } Direction;
  */
 struct maze_room {
     // Fill in the fields you need
-    
+    int row;
+    int col;
+    bool visited; // what can i do instead of a boolean?
+    int connections[4];
+    // confused how to do the connection field
     // NOTE: ignore this field until you start implementing the solver
     struct maze_room *next;
 };
