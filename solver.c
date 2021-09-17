@@ -31,6 +31,7 @@
  */
 void create_room_connections(struct maze_room *room, unsigned int hex) {
     // TODO: implement this function
+    
 }
 
 /*

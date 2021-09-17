@@ -19,6 +19,12 @@
  */
 int is_in_range(int row, int col, int num_rows, int num_cols) {
     // TODO: implement function
+    if ((num_rows > row) && (num_cols > col)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*
@@ -39,6 +45,31 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
                                struct maze_room maze[num_rows][num_cols],
                                struct maze_room *room, Direction dir) {
     // TODO: implement function
+    struct maze_room *new_room;
+    if (dir == NORTH) {
+        // decrease row by 1 in (row,col)
+        new_room.row = *room.row - 1;
+        new_room.col = *room.col;
+        return new_room;
+    }
+    else if (dir == SOUTH) {
+        // increase row by 1
+        new_room.row = *room.row + 1;
+        new_room.col = *room.col;
+        return new_room;
+    }
+    else if (dir == WEST) {
+        // decrease col by 1
+        new_room.row = *room.row;
+        new_room.col = *room.col - 1;
+        return new_room;
+    }
+    else if (dir == EAST) {
+        // increase col by 1
+        new_room.row = *room.row;
+        new_room.col = *room.col + 1;
+        return new_room;
+    }
 }
 
 /*
@@ -56,5 +87,9 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
 void initialize_maze(int num_rows, int num_cols,
            struct maze_room maze[num_rows][num_cols]) {
     // TODO: implement function
+    maze.row = num_rows;
+    maze.col = num_cols;
+    maze.visited = 0;
+    maze.connections = {};
 }
 
