@@ -41,7 +41,7 @@ Direction get_opposite_dir(Direction dir) {
  */
 void shuffle_array(Direction directions[]) {
     // TODO: implement this function
-    int n = sizeof(directions);
+    int n = 4;
     int r;
     int temp;
     for (int i = 0; i < n - 1; i++) {
@@ -76,7 +76,7 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
     shuffle_array(directions); // does this actually change the array
     struct maze_room *new_room;
 
-    for (int i = 0; i < sizeof(directions) - 1; i++) {
+    for (int i = 0; i < 4; i++) {
         int new_row;
         int new_col;
         new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);

@@ -48,27 +48,30 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
     struct maze_room *new_room;
     if (dir == NORTH) {
         // decrease row by 1 in (row,col)
-        new_room.row = *room.row - 1;
-        new_room.col = *room.col;
+        new_room->row = (*room).row - 1;
+        new_room->col = (*room).col;
         return new_room;
     }
     else if (dir == SOUTH) {
         // increase row by 1
-        new_room.row = *room.row + 1;
-        new_room.col = *room.col;
+        new_room->row = (*room).row + 1;
+        new_room->col = (*room).col;
         return new_room;
     }
     else if (dir == WEST) {
         // decrease col by 1
-        new_room.row = *room.row;
-        new_room.col = *room.col - 1;
+        new_room->row = (*room).row;
+        new_room->col = (*room).col - 1;
         return new_room;
     }
     else if (dir == EAST) {
         // increase col by 1
-        new_room.row = *room.row;
-        new_room.col = *room.col + 1;
+        new_room->row = (*room).row;
+        new_room->col = (*room).col + 1;
         return new_room;
+    }
+    else {
+        return NULL;
     }
 }
 
@@ -86,10 +89,16 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
  */
 void initialize_maze(int num_rows, int num_cols,
            struct maze_room maze[num_rows][num_cols]) {
-    // TODO: implement function
-    maze.row = num_rows;
-    maze.col = num_cols;
-    maze.visited = 0;
-    maze.connections = {};
+    for (int i=0; i<num_rows;i++) {
+        for (int j=0; j<num_cols;j++) {
+            (maze[row][col]).row = i;
+            (maze[row][col]).col = j;
+            (maze[row][col]).visited = 0;
+            (maze[row][col]).connections[0] = 8; // value other than 1 or 0
+            (maze[row][col]).connections[1] = 8;
+            (maze[row][col]).connections[2] = 8;
+            (maze[row][col]).connections[3] = 8;
+        }
+    }
 }
 
