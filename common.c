@@ -91,13 +91,13 @@ void initialize_maze(int num_rows, int num_cols,
            struct maze_room maze[num_rows][num_cols]) {
     for (int i=0; i<num_rows;i++) {
         for (int j=0; j<num_cols;j++) {
-            (maze[row][col]).row = i;
-            (maze[row][col]).col = j;
-            (maze[row][col]).visited = 0;
-            (maze[row][col]).connections[0] = 8; // value other than 1 or 0
-            (maze[row][col]).connections[1] = 8;
-            (maze[row][col]).connections[2] = 8;
-            (maze[row][col]).connections[3] = 8;
+            (maze[i][j]).row = i;
+            (maze[i][j]).col = j;
+            (maze[i][j]).visited = 0;
+            (maze[i][j]).connections[0] = 8; // value other than 1 or 0
+            (maze[i][j]).connections[1] = 8;
+            (maze[i][j]).connections[2] = 8;
+            (maze[i][j]).connections[3] = 8;
         }
     }
 }
