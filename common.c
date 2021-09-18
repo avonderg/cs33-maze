@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "common.h"
 
 /*
@@ -50,24 +49,28 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
         // decrease row by 1 in (row,col)
         new_room->row = (*room).row - 1;
         new_room->col = (*room).col;
+        new_room = &(maze[(*room).row - 1][(*room).col]); // fixing address
         return new_room;
     }
     else if (dir == SOUTH) {
         // increase row by 1
         new_room->row = (*room).row + 1;
         new_room->col = (*room).col;
+        new_room = &(maze[(*room).row + 1][(*room).col]); // fixing address
         return new_room;
     }
     else if (dir == WEST) {
         // decrease col by 1
         new_room->row = (*room).row;
         new_room->col = (*room).col - 1;
+        new_room = &(maze[(*room).row][(*room).col - 1]); // fixing address
         return new_room;
     }
     else if (dir == EAST) {
         // increase col by 1
         new_room->row = (*room).row;
         new_room->col = (*room).col + 1;
+        new_room = &(maze[(*room).row ][(*room).col + 1]); // fixing address
         return new_room;
     }
     else {

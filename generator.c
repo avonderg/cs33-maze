@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h> // added in by me
 #include "generator.h"
 
 /*
@@ -138,8 +137,6 @@ int encode_room(struct maze_room room) {
         decimal += last_digit * base1;
         base1 = base1 * 2;
         }
-
-
     return decimal;
     }
 
