@@ -246,11 +246,11 @@ int main(int argc, char **argv) {
         num_cols = atoi(argv[3]);
         struct maze_room maze[num_rows][num_cols];
         int result[num_rows][num_cols];
-        int encoded_maze[num_rows][num_cols];
+        //int encoded_maze[num_rows][num_cols];
         initialize_maze(num_rows,num_cols,maze);
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
         //write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
-        write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
+        return write_encoded_maze_to_file(num_rows,num_cols,result,file_name);
     }
 }
