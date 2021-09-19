@@ -99,7 +99,7 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
                     r->connections[directions[i]] = 1; 
                 }
                 else {
-                    r->connections[directions[i]] = 0; // might be wrong
+                    r->connections[directions[i]] = 1; 
                 }
         } // outer else end
     }
