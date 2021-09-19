@@ -84,7 +84,7 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
         // new_col = (*new_room).col;
         if (new_room == NULL) { 
             r->connections[directions[i]] = 1; // stores wall at appropriate index
-        } 
+        }
         else { // outer else start
             if (new_room->visited == 0) {
                 r->connections[directions[i]] = 0; // stores an opening
@@ -93,7 +93,7 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
             else {
                 Direction opposite = get_opposite_dir(directions[i]);
                 if (new_room->connections[opposite] == 0) {
-                    r->connections[directions[i]] = 0; //
+                    r->connections[directions[i]] = 0; 
                 }
                 else if (new_room->connections[opposite] == 1) {
                     r->connections[directions[i]] = 1; 
@@ -230,7 +230,7 @@ int write_encoded_maze_to_file(int num_rows, int num_cols,
  */
 
 int main(int argc, char **argv) {
-    srand(time(NULL)); // idk if this goes here
+    srand(time(NULL)); 
     char *file_name;
     int num_rows;
     int num_cols;
@@ -251,6 +251,6 @@ int main(int argc, char **argv) {
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
         //write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
-        return write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);;
+        write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
     }
 }
