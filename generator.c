@@ -72,7 +72,7 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
     (*r).visited = 1;
    //shuffle_directions;
     Direction directions[] = {NORTH, SOUTH, WEST, EAST};
-    shuffle_array(directions); // does this actually change the array
+    shuffle_array(directions); 
     for (int i = 0; i < 4; i++) {
         // int new_row;
         // int new_col;
@@ -252,5 +252,6 @@ int main(int argc, char **argv) {
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
         write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
+        return 0;
     }
 }

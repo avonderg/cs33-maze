@@ -44,34 +44,29 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
                                struct maze_room maze[num_rows][num_cols],
                                struct maze_room *room, Direction dir) {
     // TODO: implement function
-    struct maze_room *new_room;
     if (dir == NORTH && is_in_range(room->row -1, room->col,num_rows,num_cols)) {
         // decrease row by 1 in (row,col)
         // new_room->row = (*room).row - 1;
         // new_room->col = (*room).col;
-        new_room = &(maze[(*room).row - 1][(*room).col]); // fixing address
-        return new_room;
+        return &(maze[(*room).row - 1][(*room).col]);
     }
     else if (dir == SOUTH && is_in_range(room->row +1, room->col,num_rows,num_cols)) {
         // increase row by 1
         // new_room->row = (*room).row + 1;
         // new_room->col = (*room).col;
-        new_room = &(maze[(*room).row + 1][(*room).col]); // fixing address
-        return new_room;
+        return &(maze[(*room).row + 1][(*room).col]);
     }
     else if (dir == WEST && is_in_range(room->row, room->col-1,num_rows,num_cols)) {
         // decrease col by 1
         // new_room->row = (*room).row;
         // new_room->col = (*room).col - 1;
-        new_room = &(maze[(*room).row][(*room).col - 1]); // fixing address
-        return new_room;
+        return &(maze[(*room).row][(*room).col - 1]);
     }
     else if (dir == EAST && is_in_range(room->row, room->col+1,num_rows,num_cols)) {
         // increase col by 1
         // new_room->row = (*room).row;
         // new_room->col = (*room).col + 1;
-        new_room = &(maze[(*room).row ][(*room).col + 1]); // fixing address
-        return new_room;
+        return &(maze[(*room).row ][(*room).col + 1]);
     }
     else {
         return NULL;
