@@ -73,15 +73,13 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
    //shuffle_directions;
     Direction directions[] = {NORTH, SOUTH, WEST, EAST};
     shuffle_array(directions); // does this actually change the array
-    struct maze_room *new_room;
-
     for (int i = 0; i < 4; i++) {
         int new_row;
         int new_col;
-        new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
+        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); //can return null
         new_row = (*new_room).row;
         new_col = (*new_room).col;
-        if (new_row >= num_rows || new_col >= num_cols) {  // can also use the is_in_range function
+        if (is_in_range(new_row,new_col,num_rows,num_cols)) { 
             (*r).connections[directions[i]] = 1; // stores wall at appropriate index
         } 
         else { // outer else start
