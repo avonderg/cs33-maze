@@ -18,12 +18,13 @@
  */
 int is_in_range(int row, int col, int num_rows, int num_cols) {
     // TODO: implement function
-    if ((num_rows >= row) && (num_cols >= col)) {
+    if ((num_rows > row) && (num_cols > col)) {
         return 1;
     }
     else {
         return 0;
     }
+    // make sure input row and column are positive!
 }
 
 /*
