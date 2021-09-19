@@ -69,9 +69,9 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
                   struct maze_room maze[num_rows][num_cols]) {
     // TODO: implement this function
     struct maze_room *r = &(maze[row][col]);
-    (*r).visited = 1;
+    r->visited = 1;
    //shuffle_directions;
-    Direction directions[] = {NORTH, SOUTH, WEST, EAST};
+    Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
     shuffle_array(directions); 
     for (int i = 0; i < 4; i++) {
         // int new_row;
@@ -82,25 +82,24 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); //can return null
         // new_row = (*new_room).row;
         // new_col = (*new_room).col;
-        if (!is_in_range(new_room->row,new_room->col,num_rows,num_cols)) { 
-            (*r).connections[directions[i]] = 1; // stores wall at appropriate index
+        if (new_room == NULL) { 
+            r->connections[directions[i]] = 1; // stores wall at appropriate index
         } 
         else { // outer else start
-            // struct maze_room *neighbor = &maze[new_row][new_col]; // did i initialize it right
-            if ((*new_room).visited == 0) {
-                (*r).connections[directions[i]] = 0; // stores an opening
-                drunken_walk((*new_room).row, (*new_room).col, num_rows, num_cols, maze); // correct?
+            if (new_room->visited == 0) {
+                r->connections[directions[i]] = 0; // stores an opening
+                drunken_walk(new_room->row, new_room->col, num_rows, num_cols, maze);
             }
             else {
                 Direction opposite = get_opposite_dir(directions[i]);
-                if ((*new_room).connections[opposite] == 0) {
-                    (*r).connections[directions[i]] = 0; 
+                if (new_room->connections[opposite] == 0) {
+                    r->connections[directions[i]] = 0; //
                 }
-                else if ((*new_room).connections[opposite] == 1) {
-                    (*r).connections[directions[i]] = 1; 
+                else if (new_room->connections[opposite] == 1) {
+                    r->connections[directions[i]] = 1; 
                 }
                 else {
-                    (*r).connections[directions[i]] = 0;
+                    r->connections[directions[i]] = 0; // might be wrong
                 }
         } // outer else end
     }
@@ -251,7 +250,7 @@ int main(int argc, char **argv) {
         initialize_maze(num_rows,num_cols,maze);
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
-        write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
-        return 0;
+        //write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
+        return write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);;
     }
 }

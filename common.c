@@ -18,7 +18,7 @@
  */
 int is_in_range(int row, int col, int num_rows, int num_cols) {
     // TODO: implement function
-    if ((num_rows > row) && (num_cols > col)) {
+    if ((num_rows > row) && (num_cols > col) && row >= 0 && col >= 0) {
         return 1;
     }
     else {
