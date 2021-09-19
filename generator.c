@@ -76,24 +76,27 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
     for (int i = 0; i < 4; i++) {
         int new_row;
         int new_col;
+        // if (get_neighbor(num_rows, num_cols, maze, r, directions[i]) == NULL) {
+        //     (*r).connections[directions[i]] = 1;
+        // }
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); //can return null
         new_row = (*new_room).row;
         new_col = (*new_room).col;
-        if (is_in_range(new_row,new_col,num_rows,num_cols)) { 
+        if (!is_in_range(new_row,new_col,num_rows,num_cols)) { 
             (*r).connections[directions[i]] = 1; // stores wall at appropriate index
         } 
         else { // outer else start
-            struct maze_room *neighbor = &maze[new_row][new_col]; // did i initialize it right
-            if ((*neighbor).visited == 0) {
+            // struct maze_room *neighbor = &maze[new_row][new_col]; // did i initialize it right
+            if ((*new_room).visited == 0) {
                 (*r).connections[directions[i]] = 0; // stores an opening
-                drunken_walk((*neighbor).row, (*neighbor).col, num_rows, num_cols, maze); // correct?
+                drunken_walk((*new_room).row, (*new_room).col, num_rows, num_cols, maze); // correct?
             }
             else {
                 Direction opposite = get_opposite_dir(directions[i]);
-                if ((*neighbor).connections[opposite] == 0) {
+                if ((*new_room).connections[opposite] == 0) {
                     (*r).connections[directions[i]] = 0; 
                 }
-                else if ((*neighbor).connections[opposite] == 1) {
+                else if ((*new_room).connections[opposite] == 1) {
                     (*r).connections[directions[i]] = 1; 
                 }
                 else {
