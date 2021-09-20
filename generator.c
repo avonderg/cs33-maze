@@ -117,14 +117,18 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
  */
 int encode_room(struct maze_room room) {
     // TODO: implement this function
-    int rep[4];
-    char s[9] = {0};
-    int n = 0;
-    rep[0] = room.connections[3] * 1;
-    rep[1] = room.connections[2] * 2;
-    rep[2] = room.connections[1] * 4;
-    rep[3] = room.connections[0] * 8;
-    int binary_val = rep[0] + rep[1] + rep[2] + rep[3];
+    // int rep[4];
+    // char s[9] = {0};
+    // int n = 0;
+    int r1;
+    int r2;
+    int r3;
+    int r4;
+    r1 = room.connections[3] * 1;
+    r2 = room.connections[2] * 2;
+    r3 = room.connections[1] * 4;
+    r4 = room.connections[0] * 8;
+    int binary_val = r1 + r2 + r3 + r4;
     //  for (int i = 0; i < 4; i++) {
     //     n += sprintf (&s[n], "%d", rep[i]);
     // }
