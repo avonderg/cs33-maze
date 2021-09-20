@@ -124,10 +124,10 @@ int encode_room(struct maze_room room) {
     int r2;
     int r3;
     int r4;
-    r1 = room.connections[3] * 1;
-    r2 = room.connections[2] * 2;
-    r3 = room.connections[1] * 4;
-    r4 = room.connections[0] * 8;
+    r1 = room.connections[3] * 8;
+    r2 = room.connections[2] * 4;
+    r3 = room.connections[1] * 2;
+    r4 = room.connections[0] * 1;
     int binary_val = r1 + r2 + r3 + r4;
     //  for (int i = 0; i < 4; i++) {
     //     n += sprintf (&s[n], "%d", rep[i]);
