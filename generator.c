@@ -157,7 +157,6 @@ void encode_maze(int num_rows, int num_cols,
                  struct maze_room maze[num_rows][num_cols],
                  int result[num_rows][num_cols]) {
     // TODO: implement this function
-    // is result in the same location as maze; i.e., are they the same?
     for (int i = 0; i<num_rows;i++) {
         for (int j =0; j<num_cols; j++) {
             result[i][j] = encode_room(maze[i][j]); // are these changes being stored in memory?
