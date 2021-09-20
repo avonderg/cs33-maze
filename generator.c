@@ -120,10 +120,10 @@ int encode_room(struct maze_room room) {
     int rep[4];
     char s[9] = {0};
     int n = 0;
-    rep[0] = room.connections[3] * 8;
-    rep[1] = room.connections[2] * 4;
-    rep[2] = room.connections[1] * 2;
-    rep[3] = room.connections[0] * 1;
+    rep[0] = room.connections[3] * 1;
+    rep[1] = room.connections[2] * 2;
+    rep[2] = room.connections[1] * 4;
+    rep[3] = room.connections[0] * 8;
      for (int i = 0; i < 4; i++) {
         n += sprintf (&s[n], "%d", rep[i]);
     }
