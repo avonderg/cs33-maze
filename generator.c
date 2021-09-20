@@ -124,10 +124,11 @@ int encode_room(struct maze_room room) {
     rep[1] = room.connections[2] * 2;
     rep[2] = room.connections[1] * 4;
     rep[3] = room.connections[0] * 8;
-     for (int i = 0; i < 4; i++) {
-        n += sprintf (&s[n], "%d", rep[i]);
-    }
-    int binary_val = atoi(s);
+    int binary_val = rep[0] + rep[1] + rep[2] + rep[3];
+    //  for (int i = 0; i < 4; i++) {
+    //     n += sprintf (&s[n], "%d", rep[i]);
+    // }
+    // int binary_val = atoi(s);
     // int decimal = 0;
     // int base1 = 1;
     // int temp = binary_val;
