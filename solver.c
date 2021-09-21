@@ -259,16 +259,16 @@ int main(int argc, char **argv) {
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name); //correct?
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         #ifdef FULL
-        fprintf(path_file_name, "%7s\n", "FULL");
+        fprintf(path_file, "%7s\n", "FULL");
         // if (fclose(path_file_name)) {
         //     fprintf(stderr, "[Error Writing to File.]\n");
         //     return 0; // would i even return something here?
         // }
         #endif
-        dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file_name);
+        dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
         #ifndef FULL
-        fprintf(path_file_name, "%7s\n", "PRUNED");
-        print_pruned_path(&maze[start_row][start_col],path_file_name);
+        fprintf(path_file, "%7s\n", "PRUNED");
+        print_pruned_path(&maze[start_row][start_col],path_file);
         // if (fclose(path_file_name)) {
         //     fprintf(stderr, "[Error Writing to File.]\n");
         //     return 0; // would i even return something here?
