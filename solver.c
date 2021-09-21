@@ -76,10 +76,10 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         // write it to the file here?
         fprintf(file, "%d\t", row);
         fprintf(file, "%d\n", col);
-        if (fclose(file)) {
-        fprintf(stderr, "[Error Writing to File.]\n");
-        return 0; // yes or no
-    }
+    //     if (fclose(file)) {
+    //     fprintf(stderr, "[Error Writing to File.]\n");
+    //     return 0; // yes or no
+    // }
     #endif
     if ((row == goal_row) && (col == goal_col)) {
         return 1;
@@ -93,10 +93,10 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
                 // write it to the file here?
                 fprintf(file, "%d\t", row);
                 fprintf(file, "%d\n", col);
-                if (fclose(file)) {
-                    fprintf(stderr, "[Error Writing to File.]\n");
-                    return 0; // yes or no
-                }
+                // if (fclose(file)) {
+                //     fprintf(stderr, "[Error Writing to File.]\n");
+                //     return 0; // yes or no
+                // }
                 #endif
                 r->next = new_room; //pointer to next room
                 return 1;
@@ -105,10 +105,10 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         // write it to the file here?
         fprintf(file, "%d\t", row);
         fprintf(file, "%d\n", col);
-        if (fclose(file)) {
-            fprintf(stderr, "[Error Writing to File.]\n");
-            return 0; // would i even return something here?
-        }
+        // if (fclose(file)) {
+        //     fprintf(stderr, "[Error Writing to File.]\n");
+        //     return 0; // would i even return something here?
+        // }
         #endif
         }
     }
@@ -161,11 +161,11 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     }
     fprintf(file, "%d\t", room->row);
     fprintf(file, "%d\n", room->col);
-    if (fclose(file)) {
-        fprintf(stderr, "[Error Writing to File.]\n");
-        return 1;
-    }
-    else if (room->next == NULL) {
+    // if (fclose(file)) {
+    //     fprintf(stderr, "[Error Writing to File.]\n");
+    //     return 1;
+    // }
+    if (room->next == NULL) {
         return 0;
     }
     print_pruned_path(room->next, file); //recursive call
@@ -260,19 +260,19 @@ int main(int argc, char **argv) {
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         #ifdef FULL
         fprintf(path_file_name, "%7s\n", "FULL");
-        if (fclose(path_file_name)) {
-            fprintf(stderr, "[Error Writing to File.]\n");
-            return 0; // would i even return something here?
-        }
+        // if (fclose(path_file_name)) {
+        //     fprintf(stderr, "[Error Writing to File.]\n");
+        //     return 0; // would i even return something here?
+        // }
         #endif
         dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file_name);
         #ifndef FULL
         fprintf(path_file_name, "%7s\n", "PRUNED");
         print_pruned_path(&maze[start_row][start_col],path_file_name);
-        if (fclose(path_file_name)) {
-            fprintf(stderr, "[Error Writing to File.]\n");
-            return 0; // would i even return something here?
-        }
+        // if (fclose(path_file_name)) {
+        //     fprintf(stderr, "[Error Writing to File.]\n");
+        //     return 0; // would i even return something here?
+        // }
         #endif
         return 0;
         //close file
