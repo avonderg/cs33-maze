@@ -157,13 +157,17 @@ void decode_maze(int num_rows, int num_cols,
  */
 int print_pruned_path(struct maze_room *room, FILE *file) {
     // TODO: implement this function
-    if (room != NULL) {
+    if (room == NULL) {
+        return 1;
+    }
     fprintf(file, "%d\t", room->row);
     fprintf(file, "%d\n", room->col);
-    }
     if (fclose(file)) {
         fprintf(stderr, "[Error Writing to File.]\n");
         return 1;
+    }
+    else if (room->next == NULL) {
+        return 0;
     }
     print_pruned_path(room->next, file); //recursive call
 }
@@ -268,6 +272,7 @@ int main(int argc, char **argv) {
             return 0; // would i even return something here?
         }
         #endif
+        return 0;
         // call dfs first
         // call print pruned path
     }
