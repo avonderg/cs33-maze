@@ -84,10 +84,10 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
     if (row == goal_row && col == goal_col) {
         return 1;
     }
-    maze[row][col].visited = 1;
+    r->visited = 1;
     for (int i=0; i<4; i++) {
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
-        if (new_room->visited == 0 && r->connections[directions[i]] == 0) {
+        if ((new_room->visited == 0) && (r->connections[directions[i]] == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
                 #ifdef FULL
                 // write it to the file here?
