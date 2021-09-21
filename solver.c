@@ -75,7 +75,7 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
     #ifdef FULL
         // write it to the file here?
         fprintf(file, "%d\t", row);
-        fprintf(file, "%sd\n", col);
+        fprintf(file, "%d\n", col);
         if (fclose(file)) {
         fprintf(stderr, "[Error Writing to File.]\n");
         return 0; // yes or no
@@ -92,7 +92,7 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
                 #ifdef FULL
                 // write it to the file here?
                 fprintf(file, "%d\t", row);
-                fprintf(file, "%sd\n", col);
+                fprintf(file, "%d\n", col);
                 if (fclose(file)) {
                     fprintf(stderr, "[Error Writing to File.]\n");
                     return 0; // yes or no
@@ -104,7 +104,7 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         #ifdef FULL
         // write it to the file here?
         fprintf(file, "%d\t", row);
-        fprintf(file, "%sd\n", col);
+        fprintf(file, "%d\n", col);
         if (fclose(file)) {
             fprintf(stderr, "[Error Writing to File.]\n");
             return 0; // would i even return something here?
@@ -257,7 +257,7 @@ int main(int argc, char **argv) {
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         #ifdef FULL
         fprintf(path_file_name, "%7s\n", "FULL");
-        if (fclose(file)) {
+        if (fclose(path_file_name)) {
             fprintf(stderr, "[Error Writing to File.]\n");
             return 0; // would i even return something here?
         }
@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
         #ifdef PRUNED
         fprintf(path_file_name, "%7s\n", "PRUNED");
         print_pruned_path(&maze[start_row][start_col],path_file_name);
-        if (fclose(file)) {
+        if (fclose(path_file_name)) {
             fprintf(stderr, "[Error Writing to File.]\n");
             return 0; // would i even return something here?
         }
