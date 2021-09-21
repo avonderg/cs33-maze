@@ -97,6 +97,7 @@ void initialize_maze(int num_rows, int num_cols,
             (maze[i][j]).connections[1] = 8;
             (maze[i][j]).connections[2] = 8;
             (maze[i][j]).connections[3] = 8;
+            (maze[i][j]).next = NULL;
         }
     }
 }
