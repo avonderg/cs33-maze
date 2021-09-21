@@ -31,7 +31,16 @@
  */
 void create_room_connections(struct maze_room *room, unsigned int hex) {
     // TODO: implement this function
-    
+    int base = 8;
+    for (int i=0; i<4;i++) {
+        if (hex&base != 0) {
+            room->connections[i] = 1;
+        }
+        else {
+            room->connections[i] = 0;
+        }
+        base = base/2;
+    }
 }
 
 /*
@@ -61,7 +70,50 @@ void create_room_connections(struct maze_room *room, unsigned int hex) {
 int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         int num_cols, struct maze_room maze[num_rows][num_cols], FILE *file) {
     Direction directions[4] = { NORTH, SOUTH, EAST, WEST };
+    struct maze_room *r = &(maze[row][col]);
     // TODO: implement this function
+    #ifdef FULL
+        // write it to the file here?
+        fprintf(file, "%d\t", row);
+        fprintf(file, "%sd\n", col);
+        if (fclose(file)) {
+        fprintf(stderr, "[Error Writing to File.]\n");
+        return 0; // yes or no
+    }
+    #endif
+    if (row == goal_row && col == goal_col) {
+        return 1;
+    }
+    maze[row][col].visited = 1;
+    Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
+    for (int i=0; i<4; i++) {
+        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
+        if (new_room->visited == 0 && r->connections[directions[i]] == 0) {
+            if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
+                #ifdef FULL
+                // write it to the file here?
+                fprintf(file, "%d\t", row);
+                fprintf(file, "%sd\n", col);
+                if (fclose(file)) {
+                    fprintf(stderr, "[Error Writing to File.]\n");
+                    return 0; // yes or no
+                }
+                #endif
+                r->next = new_room; //pointer to next room
+                return 1;
+            }
+        #ifdef FULL
+        // write it to the file here?
+        fprintf(file, "%d\t", row);
+        fprintf(file, "%sd\n", col);
+        if (fclose(file)) {
+            fprintf(stderr, "[Error Writing to File.]\n");
+            return 0; // would i even return something here?
+        }
+        #endif
+        }
+    }
+    return 0;
 }
 
 /*
@@ -82,6 +134,14 @@ void decode_maze(int num_rows, int num_cols,
                  struct maze_room maze[num_rows][num_cols],
                  int encoded_maze[num_rows][num_cols]) {
     // TODO: implement this function
+    for (int i=0; i<num_rows; i++) {
+        for (int j=0; j<num_cols;j++) {
+            (maze[i][j]).row = i;
+            (maze[i][j]).col = j;
+            (maze[i][j]).visited = 0;
+            create_room_connections(&maze[i][j], encoded_maze[i][j]);
+        }
+    }
 }
 
 /*
@@ -97,6 +157,15 @@ void decode_maze(int num_rows, int num_cols,
  */
 int print_pruned_path(struct maze_room *room, FILE *file) {
     // TODO: implement this function
+    if (room != NULL) {
+    fprintf(file, "%d\t", room->row);
+    fprintf(file, "%d\n", room->col);
+    }
+    if (fclose(file)) {
+        fprintf(stderr, "[Error Writing to File.]\n");
+        return 1;
+    }
+    print_pruned_path(room->next, file); //recursive call
 }
 
 /*
@@ -179,6 +248,28 @@ int main(int argc, char **argv) {
         start_col = atoi(argv[6]);
         goal_row = atoi(argv[7]);
         goal_col = atoi(argv[8]);
+        struct maze_room encoded_maze[num_rows][num_cols];
+        struct maze_room maze[num_rows][num_cols];
+        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name); //correct?
+        decode_maze(num_rows,num_cols,maze,encoded_maze);
+        #ifdef FULL
+        fprintf(path_file_name, "%7s\n", "FULL");
+        if (fclose(file)) {
+            fprintf(stderr, "[Error Writing to File.]\n");
+            return 0; // would i even return something here?
+        }
+        #endif
+        dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file_name);
+        #ifdef PRUNED
+        fprintf(path_file_name, "%7s\n", "PRUNED");
+        print_pruned_path(&maze[start_row][start_col],path_file_name);
+        if (fclose(file)) {
+            fprintf(stderr, "[Error Writing to File.]\n");
+            return 0; // would i even return something here?
+        }
+        #endif
+        // call dfs first
+        // call print pruned path
     }
     // TODO: implement this function
 }
