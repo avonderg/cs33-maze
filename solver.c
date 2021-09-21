@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "solver.h"
-
+Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
 /*
  * Given a pointer to a maze_room, set its connections in all four directions
  *based on the hex value passed in.
@@ -85,7 +85,6 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         return 1;
     }
     maze[row][col].visited = 1;
-    Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
     for (int i=0; i<4; i++) {
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
         if (new_room->visited == 0 && r->connections[directions[i]] == 0) {
