@@ -253,6 +253,7 @@ int main(int argc, char **argv) {
         goal_col = atoi(argv[8]);
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
+        initialize_maze(num_rows, num_cols, maze);
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name); //correct?
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         #ifdef FULL
@@ -272,6 +273,7 @@ int main(int argc, char **argv) {
         }
         #endif
         return 0;
+        //close file
         // call dfs first
         // call print pruned path
     }
