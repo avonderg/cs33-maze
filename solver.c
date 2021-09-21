@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "solver.h"
-Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
+// Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
 /*
  * Given a pointer to a maze_room, set its connections in all four directions
  *based on the hex value passed in.
@@ -81,13 +81,13 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         return 0; // yes or no
     }
     #endif
-    if (row == goal_row && col == goal_col) {
+    if ((row == goal_row) && (col == goal_col)) {
         return 1;
     }
     r->visited = 1;
     for (int i=0; i<4; i++) {
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
-        if ((new_room->visited == 0) && (r->connections[directions[i]] == 0)) {
+        if ((r->connections[directions[i]] == 0)&& (new_room->visited == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
                 #ifdef FULL
                 // write it to the file here?
@@ -251,6 +251,8 @@ int main(int argc, char **argv) {
         start_col = atoi(argv[6]);
         goal_row = atoi(argv[7]);
         goal_col = atoi(argv[8]);
+    
+        FILE *path_file = fopen(path_file_name, "w+");
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
