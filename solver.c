@@ -33,11 +33,11 @@ void create_room_connections(struct maze_room *room, unsigned int hex) {
     // TODO: implement this function
     int base = 8;
     for (int i=0; i<4;i++) {
-        if (hex&base != 0) {
-            room->connections[i] = 1;
+        if (hex&base == 0) {
+            room->connections[i] = 0;
         }
         else {
-            room->connections[i] = 0;
+            room->connections[i] = 1;
         }
         base = base/2;
     }
