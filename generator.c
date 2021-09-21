@@ -148,7 +148,7 @@ void encode_maze(int num_rows, int num_cols,
     // TODO: implement this function
     for (int i = 0; i<num_rows;i++) {
         for (int j =0; j<num_cols; j++) {
-            result[i][j] = encode_room(maze[i][j]); // are these changes being stored in memory?
+            result[i][j] = encode_room(maze[i][j]); 
         }
     }
 }

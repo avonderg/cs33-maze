@@ -18,7 +18,7 @@
  */
 int is_in_range(int row, int col, int num_rows, int num_cols) {
     // TODO: implement function
-    if ((num_rows > row) && (num_cols > col) && row >= 0 && col >= 0) {
+    if ((num_rows > row) && (num_cols > col) && (row >= 0) && (col >= 0)) {
         return 1;
     }
     else {
@@ -57,7 +57,7 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
         // new_room->col = (*room).col;
         return &(maze[(*room).row + 1][(*room).col]);
     }
-    else if (d(ir == WEST) && (is_in_range(room->row, room->col-1,num_rows,num_cols))) {
+    else if ((dir == WEST) && (is_in_range(room->row, room->col-1,num_rows,num_cols))) {
         // decrease col by 1
         // new_room->row = (*room).row;
         // new_room->col = (*room).col - 1;
