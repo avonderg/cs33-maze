@@ -161,10 +161,10 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     }
     fprintf(file, "%d\t", room->row);
     fprintf(file, "%d\n", room->col);
-    // if (fclose(file)) {
-    //     fprintf(stderr, "[Error Writing to File.]\n");
-    //     return 1;
-    // }
+    if (fclose(file)) {
+        fprintf(stderr, "[Error Writing to File.]\n");
+        return 1;
+    }
     if (room->next == NULL) {
         return 0;
     }
