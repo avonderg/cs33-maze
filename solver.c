@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
         }
         #endif
         dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file_name);
-        #ifdef PRUNED
+        #ifndef FULL
         fprintf(path_file_name, "%7s\n", "PRUNED");
         print_pruned_path(&maze[start_row][start_col],path_file_name);
         if (fclose(path_file_name)) {
