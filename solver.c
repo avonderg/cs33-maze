@@ -161,10 +161,10 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     }
     fprintf(file, "%d\t", room->row);
     fprintf(file, "%d\n", room->col);
-    if (fclose(file)) {
-        fprintf(stderr, "[Error Writing to File.]\n");
-        return 1;
-    }
+    // if (fclose(file)) {
+    //     fprintf(stderr, "[Error Writing to File.]\n");
+    //     return 1;
+    // }
     if (room->next == NULL) {
         return 0;
     }
@@ -256,7 +256,7 @@ int main(int argc, char **argv) {
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
-        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name); //correct?
+        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         #ifdef FULL
         fprintf(path_file, "%7s\n", "FULL");
@@ -274,6 +274,10 @@ int main(int argc, char **argv) {
         //     return 0; // would i even return something here?
         // }
         #endif
+        if (fclose(path_file)) {
+        fprintf(stderr, "[Error Writing to File.]\n");
+        return 1;
+        }
         return 0;
         //close file
         // call dfs first
