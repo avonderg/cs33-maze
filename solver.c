@@ -157,7 +157,7 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     // TODO: implement this function
     int err = 0;
     while (room != NULL) {
-    err = fprintf(file, "%d, %d\n", room->row), room->col;
+    err = fprintf(file, "%d, %d\n", room->row, room->col);
     if (err <0) {
        fprintf(stderr, "Error writing to file.\n");
         return 1; 
