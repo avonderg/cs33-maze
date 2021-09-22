@@ -173,17 +173,15 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     //     return 1;
     // }
     return 0;
-    if (room == NULL) {
-        return 0;
-    }
-    int err = 0;
-    err = fprintf(file, "%d, %d\n", room->row, room->col);
-    if (err <0) {
-       fprintf(stderr, "Error writing to file.\n");
-        return 1; 
-    }
-
-
+    // if (room == NULL) {
+    //     return 0;
+    // }
+    // int err = 0;
+    // err = fprintf(file, "%d, %d\n", room->row, room->col);
+    // if (err <0) {
+    //    fprintf(stderr, "Error writing to file.\n");
+    //     return 1; 
+    // }
 }
 
 /*
