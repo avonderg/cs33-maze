@@ -265,6 +265,12 @@ int main(int argc, char **argv) {
         if ((num_rows <1) || (num_cols <1)) { // maze is 'bad'
             return 1; 
         }
+        if ((start_row >= num_rows) || (start_col >= num_cols)) { // destination is 'bad'
+            return 1; 
+        }
+        if ((goal_row >= num_rows) || (goal_col >= num_cols)) { // destination is 'bad'
+            return 1; 
+        }
         // end initializing and error checking
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
