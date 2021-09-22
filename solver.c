@@ -73,13 +73,12 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
     struct maze_room *r = &(maze[row][col]);
     // TODO: implement this function
     #ifdef FULL
-        // write it to the file here?
-        fprintf(file, "%d\t", row);
-        fprintf(file, "%d\n", col);
-    //     if (fclose(file)) {
-    //     fprintf(stderr, "[Error Writing to File.]\n");
-    //     return 0; // yes or no
-    // }
+        int err = 0;
+        err = fprintf(file, "%d, %d\n", row, col);
+        if (err <0) {
+        fprintf(stderr, "Error writing to file.\n");
+        return 1;
+        }
     #endif
     if ((row == goal_row) && (col == goal_col)) {
         return 1;
@@ -87,29 +86,29 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
     r->visited = 1;
     for (int i=0; i<4; i++) {
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
-        if ((r->connections[directions[i]] == 0)&& (new_room->visited == 0)) {
+        if ((r->connections[directions[i]] == 0) && (new_room->visited == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
                 #ifdef FULL
-                // write it to the file here?
-                fprintf(file, "%d\t", row);
-                fprintf(file, "%d\n", col);
-                // if (fclose(file)) {
-                //     fprintf(stderr, "[Error Writing to File.]\n");
-                //     return 0; // yes or no
-                // }
+                int err = 0;
+                err = fprintf(file, "%d, %d\n", row, col);
+                if (err <0) {
+                fprintf(stderr, "Error writing to file.\n");
+                return 1;
+                }
                 #endif
                 r->next = new_room; //pointer to next room
                 return 1;
             }
-        #ifdef FULL
-        // write it to the file here?
-        fprintf(file, "%d\t", row);
-        fprintf(file, "%d\n", col);
-        // if (fclose(file)) {
-        //     fprintf(stderr, "[Error Writing to File.]\n");
-        //     return 0; // would i even return something here?
-        // }
-        #endif
+            else {
+                #ifdef FULL
+                int err = 0;
+                err = fprintf(file, "%d, %d\n", row, col);
+                if (err <0) {
+                fprintf(stderr, "Error writing to file.\n");
+                return 1;
+                }
+                #endif
+            }
         }
     }
     return 0;
@@ -156,19 +155,22 @@ void decode_maze(int num_rows, int num_cols,
  */
 int print_pruned_path(struct maze_room *room, FILE *file) {
     // TODO: implement this function
-    if (room == NULL) {
-        return 1;
+    int err = 0;
+    while (room != NULL) {
+    err = fprintf(file, "%d, %d\n", room->row), room->col;
+    if (err <0) {
+       fprintf(stderr, "Error writing to file.\n");
+        return 1; 
     }
-    fprintf(file, "%d\t", room->row);
-    fprintf(file, "%d\n", room->col);
+     room = room->next;
+    }
+    // fprintf(file, "%d\t", room->row);
+    // fprintf(file, "%d\n", room->col);
     // if (fclose(file)) {
     //     fprintf(stderr, "[Error Writing to File.]\n");
     //     return 1;
     // }
-    if (room->next == NULL) {
-        return 0;
-    }
-    print_pruned_path(room->next, file); //recursive call
+    return 0;
 }
 
 /*
@@ -252,12 +254,11 @@ int main(int argc, char **argv) {
         goal_row = atoi(argv[7]);
         goal_col = atoi(argv[8]);
     
-        FILE *path_file = fopen(path_file_name, "w+");
-        struct maze_room encoded_maze[num_rows][num_cols];
-        struct maze_room maze[num_rows][num_cols];
-        initialize_maze(num_rows, num_cols, maze);
-        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
-        decode_maze(num_rows,num_cols,maze,encoded_maze);
+        FILE *path_file = fopen(path_file_name, "w");
+        if (path_file == NULL) {
+        fprintf(stderr, "Error opening file.\n");
+        return 1;
+        }
         #ifdef FULL
         fprintf(path_file, "%7s\n", "FULL");
         // if (fclose(path_file_name)) {
@@ -265,23 +266,23 @@ int main(int argc, char **argv) {
         //     return 0; // would i even return something here?
         // }
         #endif
-        dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
         #ifndef FULL
         fprintf(path_file, "%7s\n", "PRUNED");
+        #endif
+        struct maze_room encoded_maze[num_rows][num_cols];
+        struct maze_room maze[num_rows][num_cols];
+        initialize_maze(num_rows, num_cols, maze);
+        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
+        decode_maze(num_rows,num_cols,maze,encoded_maze);
+        dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
+        #ifndef FULL
         print_pruned_path(&maze[start_row][start_col],path_file);
-        // if (fclose(path_file_name)) {
-        //     fprintf(stderr, "[Error Writing to File.]\n");
-        //     return 0; // would i even return something here?
-        // }
         #endif
         if (fclose(path_file)) {
-        fprintf(stderr, "[Error Writing to File.]\n");
+        fprintf(stderr, "Could not close file\n");
         return 1;
         }
         return 0;
-        //close file
-        // call dfs first
-        // call print pruned path
     }
     // TODO: implement this function
 }
