@@ -239,19 +239,6 @@ int main(int argc, char **argv) {
         start_col = atoi(argv[6]);
         goal_row = atoi(argv[7]);
         goal_col = atoi(argv[8]);
-
-        FILE *path_file = fopen(path_file_name, "w"); // opens file
-        if (path_file == NULL) {
-        fprintf(stderr, "Error opening file.\n");
-        return 1;
-        }
-        #ifdef FULL
-
-        fprintf(path_file, "%s\n", "FULL");
-        #endif
-        #ifndef FULL
-        fprintf(path_file, "%s\n", "PRUNED");
-        #endif
         //initializing and error checking
         if ((start_row <0) || (start_col <0)) { // destination is 'bad'
             return 1; 
@@ -268,6 +255,18 @@ int main(int argc, char **argv) {
         if ((goal_row >= num_rows) || (goal_col >= num_cols)) { // destination is 'bad'
             return 1; 
         }
+        FILE *path_file = fopen(path_file_name, "w"); // opens file
+        if (path_file == NULL) {
+        fprintf(stderr, "Error opening file.\n");
+        return 1;
+        }
+        #ifdef FULL
+
+        fprintf(path_file, "%s\n", "FULL");
+        #endif
+        #ifndef FULL
+        fprintf(path_file, "%s\n", "PRUNED");
+        #endif
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
