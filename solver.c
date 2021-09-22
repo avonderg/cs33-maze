@@ -33,6 +33,7 @@ void create_room_connections(struct maze_room *room, unsigned int hex) {
     // TODO: implement this function
     int base = 1;
     for (int i=0; i<4;i++) {
+        int result = hex&base;
         if (hex&base == 0) {
             room->connections[i] = 0;
         }
@@ -88,14 +89,14 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
         if ((r->connections[directions[i]] == 0) && (new_room->visited == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
-                #ifdef FULL
-                int err = 0;
-                err = fprintf(file, "%d, %d\n", row, col);
-                if (err <0) {
-                fprintf(stderr, "Error writing to file.\n");
-                return 1;
-                }
-                #endif
+                // #ifdef FULL
+                // int err = 0;
+                // err = fprintf(file, "%d, %d\n", row, col);
+                // if (err <0) {
+                // fprintf(stderr, "Error writing to file.\n");
+                // return 1;
+                // }
+                // #endif
                 r->next = new_room; //pointer to next room
                 return 1;
             }
@@ -137,6 +138,7 @@ void decode_maze(int num_rows, int num_cols,
             (maze[i][j]).row = i;
             (maze[i][j]).col = j;
             (maze[i][j]).visited = 0;
+            (maze[i][j]).next = NULL;
             create_room_connections(&maze[i][j], encoded_maze[i][j]);
         }
     }
@@ -171,6 +173,17 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     //     return 1;
     // }
     return 0;
+    if (room == NULL) {
+        return 0;
+    }
+    int err = 0;
+    err = fprintf(file, "%d, %d\n", room->row, room->col);
+    if (err <0) {
+       fprintf(stderr, "Error writing to file.\n");
+        return 1; 
+    }
+
+
 }
 
 /*
