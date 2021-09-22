@@ -256,11 +256,11 @@ int main(int argc, char **argv) {
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
-        if (is_in_range(start_row, start_col,num_rows,num_cols)) {
+        if (!is_in_range(start_row, start_col,num_rows,num_cols)) {
         return 1;
         fprintf(stderr, "Out of bounds\n");
         }
-        if (is_in_range(goal_row, goal_col,num_rows,num_cols)) {
+        if (!is_in_range(goal_row, goal_col,num_rows,num_cols)) {
         fprintf(stderr, "Out of bounds\n");
         return 1;
         }
