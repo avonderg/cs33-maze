@@ -253,9 +253,6 @@ int main(int argc, char **argv) {
         fprintf(path_file, "%s\n", "PRUNED");
         #endif
         //initializing and error checking
-        struct maze_room encoded_maze[num_rows][num_cols];
-        struct maze_room maze[num_rows][num_cols];
-        initialize_maze(num_rows, num_cols, maze);
         if ((start_row <0) || (start_col <0)) { // destination is 'bad'
             return 1; 
         }
@@ -271,6 +268,9 @@ int main(int argc, char **argv) {
         if ((goal_row >= num_rows) || (goal_col >= num_cols)) { // destination is 'bad'
             return 1; 
         }
+        struct maze_room encoded_maze[num_rows][num_cols];
+        struct maze_room maze[num_rows][num_cols];
+        initialize_maze(num_rows, num_cols, maze);
         // end initializing and error checking
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
