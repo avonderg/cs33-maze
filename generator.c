@@ -14,6 +14,7 @@
  *  - the opposite direction to dir
  */
 Direction get_opposite_dir(Direction dir) {
+    // returns opposite directions based on input
     if (dir == NORTH) {
         return SOUTH;
     }
@@ -38,7 +39,7 @@ Direction get_opposite_dir(Direction dir) {
  *  - nothing - the array should be shuffled in place
  */
 void shuffle_array(Direction directions[]) {
-    // TODO: implement this function
+    // utilizing fisher-yates shuffle
     int n = 4;
     int r;
     int temp;
@@ -68,28 +69,28 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
                   struct maze_room maze[num_rows][num_cols]) {
     struct maze_room *r = &(maze[row][col]);
     r->visited = 1;
-    Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
-    shuffle_array(directions); 
+    Direction directions[4] = {NORTH, SOUTH, WEST, EAST}; 
+    shuffle_array(directions); // array is shuffled
     for (int i = 0; i < 4; i++) {
-        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); //can return null
-        if (new_room == NULL) { 
-            r->connections[directions[i]] = 1; // stores wall at appropriate index
+        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); // note: can return null
+        if (new_room == NULL) {  // catches null values
+            r->connections[directions[i]] = 1; // stores wall at appropriate index if new_room is null
         }
         else { // outer else start
-            if (new_room->visited == 0) {
-                r->connections[directions[i]] = 0; // stores an opening
-                drunken_walk(new_room->row, new_room->col, num_rows, num_cols, maze);
+            if (new_room->visited == 0) { // if the neighbor is unvisited:
+                r->connections[directions[i]] = 0; // program stores an opening 
+                drunken_walk(new_room->row, new_room->col, num_rows, num_cols, maze); // recursive call
             }
             else {
-                Direction opposite = get_opposite_dir(directions[i]);
-                if (new_room->connections[opposite] == 0) {
-                    r->connections[directions[i]] = 0; 
+                Direction opposite = get_opposite_dir(directions[i]); // gets opposite direction
+                if (new_room->connections[opposite] == 0) { // if neighbor has opening in direction opposite
+                    r->connections[directions[i]] = 0; // store an opening
                 }
-                else if (new_room->connections[opposite] == 1) {
-                    r->connections[directions[i]] = 1; 
+                else if (new_room->connections[opposite] == 1) { // if neighbor has a wall in opposite direction
+                    r->connections[directions[i]] = 1; // store a wall
                 }
                 else {
-                    r->connections[directions[i]] = 1; 
+                    r->connections[directions[i]] = 1; // otherwise, store a wall
                 }
         } // outer else end
     }
@@ -106,16 +107,15 @@ void drunken_walk(int row, int col, int num_rows, int num_cols,
  *  - the integer representation of a room
  */
 int encode_room(struct maze_room room) {
-    // TODO: implement this function
     int r1;
     int r2;
     int r3;
     int r4;
-    r1 = room.connections[3] * 8;
-    r2 = room.connections[2] * 4;
-    r3 = room.connections[1] * 2;
-    r4 = room.connections[0] * 1;
-    int binary_val = r1 + r2 + r3 + r4;
+    r1 = room.connections[3] * 8; // representing east
+    r2 = room.connections[2] * 4; // representing west
+    r3 = room.connections[1] * 2; // representing south
+    r4 = room.connections[0] * 1; // representing north
+    int binary_val = r1 + r2 + r3 + r4; // adds up the values to get decimal representation
     return binary_val;
     }
 
@@ -135,10 +135,9 @@ int encode_room(struct maze_room room) {
 void encode_maze(int num_rows, int num_cols,
                  struct maze_room maze[num_rows][num_cols],
                  int result[num_rows][num_cols]) {
-    // TODO: implement this function
     for (int i = 0; i<num_rows;i++) {
         for (int j =0; j<num_cols; j++) {
-            result[i][j] = encode_room(maze[i][j]); 
+            result[i][j] = encode_room(maze[i][j]); // calls encode_room
         }
     }
 }
@@ -160,7 +159,6 @@ int write_encoded_maze_to_file(int num_rows, int num_cols,
                                int encoded_maze[num_rows][num_cols],
                                char *file_name) {
     int err = 0;
-
     // open file (create it if necessary)
     FILE *f = fopen(file_name, "w+");
     if (f == NULL) {
@@ -223,11 +221,13 @@ int main(int argc, char **argv) {
         num_rows = atoi(argv[2]);
         num_cols = atoi(argv[3]);
         if ((num_rows < 1) || (num_cols < 1)) { // if maze is of invalid size
-            return 1;
+            return 1; // gives an error
         }
+        // initialization
         struct maze_room maze[num_rows][num_cols];
         int result[num_rows][num_cols];
         initialize_maze(num_rows,num_cols,maze);
+        // end initialization
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
         return write_encoded_maze_to_file(num_rows,num_cols,result,file_name);

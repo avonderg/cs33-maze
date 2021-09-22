@@ -30,11 +30,10 @@
  *pointed to by the parameter (make sure to use pointers correctly!).
  */
 void create_room_connections(struct maze_room *room, unsigned int hex) {
-    // TODO: implement this function
     int base = 1;
     int result;
     for (int i=0; i<4;i++) {
-        result = hex&base;
+        result = hex&base; // checks if there is a wall or opening
         if (result == 0) {
             room->connections[i] = 0;
         }
@@ -73,7 +72,6 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         int num_cols, struct maze_room maze[num_rows][num_cols], FILE *file) {
     Direction directions[4] = { NORTH, SOUTH, EAST, WEST };
     struct maze_room *r = &(maze[row][col]);
-    // TODO: implement this function
     #ifdef FULL
         int err = 0;
         err = fprintf(file, "%d, %d\n", row, col);
@@ -82,18 +80,19 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         return 1;
         }
     #endif
-    if ((row == goal_row) && (col == goal_col)) {
+    if ((row == goal_row) && (col == goal_col)) { // if goal row is reached
         return 1;
     }
-    r->visited = 1;
+    r->visited = 1; // sets visited to true
     for (int i=0; i<4; i++) {
-        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
+        struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); // gets neighbor (note: may be null)
         if ((r->connections[directions[i]] == 0) && (new_room->visited == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
-                r->next = new_room; //pointer to next room
+                r->next = new_room; //sets pointer to the next room for PRUNED
                 return 1;
             }
             else {
+                // writes to file if it backtracks
                 #ifdef FULL
                 int err = 0;
                 err = fprintf(file, "%d, %d\n", row, col);
@@ -125,14 +124,13 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
 void decode_maze(int num_rows, int num_cols,
                  struct maze_room maze[num_rows][num_cols],
                  int encoded_maze[num_rows][num_cols]) {
-    // TODO: implement this function
     for (int i=0; i<num_rows; i++) {
         for (int j=0; j<num_cols;j++) {
             (maze[i][j]).row = i;
             (maze[i][j]).col = j;
             (maze[i][j]).visited = 0;
             (maze[i][j]).next = NULL;
-            create_room_connections(&maze[i][j], encoded_maze[i][j]);
+            create_room_connections(&maze[i][j], encoded_maze[i][j]); // decodes maze here!
         }
     }
 }
@@ -149,15 +147,14 @@ void decode_maze(int num_rows, int num_cols,
  *  - 1 if an error occurs, 0 otherwise
  */
 int print_pruned_path(struct maze_room *room, FILE *file) {
-    // TODO: implement this function
     int err = 0;
-    while (room != NULL) {
+    while (room != NULL) { // this is the recursion being done- while room is not null (goal not yet reached)
     err = fprintf(file, "%d, %d\n", room->row, room->col);
     if (err <0) {
        fprintf(stderr, "Error writing to file.\n");
         return 1; 
     }
-     room = room->next;
+     room = room->next; 
     }
     return 0;
 }
@@ -242,8 +239,8 @@ int main(int argc, char **argv) {
         start_col = atoi(argv[6]);
         goal_row = atoi(argv[7]);
         goal_col = atoi(argv[8]);
-    
-        FILE *path_file = fopen(path_file_name, "w");
+
+        FILE *path_file = fopen(path_file_name, "w"); // opens file
         if (path_file == NULL) {
         fprintf(stderr, "Error opening file.\n");
         return 1;
@@ -254,6 +251,7 @@ int main(int argc, char **argv) {
         #ifndef FULL
         fprintf(path_file, "%s\n", "PRUNED");
         #endif
+        //initializing and error checking
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
@@ -263,10 +261,11 @@ int main(int argc, char **argv) {
         if (!is_in_range(goal_row, goal_col,num_rows,num_cols)) {
         return 1;
         }
+        // end initializing and error checking
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
-        #ifndef FULL
+        #ifndef FULL // if pruned
         print_pruned_path(&maze[start_row][start_col],path_file);
         #endif
         if (fclose(path_file)) {
@@ -275,5 +274,4 @@ int main(int argc, char **argv) {
         }
         return 0;
     }
-    // TODO: implement this function
 }
