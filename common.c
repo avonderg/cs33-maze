@@ -17,14 +17,12 @@
  *  - 0 if room is not in the maze, 1 if room is in the maze
  */
 int is_in_range(int row, int col, int num_rows, int num_cols) {
-    // TODO: implement function
-    if ((num_rows > row) && (num_cols > col) && (row >= 0) && (col >= 0)) {
+    if ((num_rows > row) && (num_cols > col) && (row >= 0) && (col >= 0)) { // if room is NOT in range
         return 1;
     }
     else {
-        return 0;
+        return 0; // otherwise, return 0
     }
-    // make sure input row and column are positive!
 }
 
 /*
@@ -46,19 +44,19 @@ struct maze_room *get_neighbor(int num_rows, int num_cols,
                                struct maze_room *room, Direction dir) {
     if ((dir == NORTH) && (is_in_range(room->row -1, room->col,num_rows,num_cols))) {
         // decrease row by 1 in (row,col)
-        return &(maze[(*room).row - 1][(*room).col]);
+        return &(maze[(*room).row - 1][(*room).col]); // returns pointer to that room
     }
     else if ((dir == SOUTH) && (is_in_range(room->row +1, room->col,num_rows,num_cols))) {
         // increase row by 1
-        return &(maze[(*room).row + 1][(*room).col]);
+        return &(maze[(*room).row + 1][(*room).col]); // returns pointer to that room
     }
     else if ((dir == WEST) && (is_in_range(room->row, room->col-1,num_rows,num_cols))) {
         // decrease col by 1
-        return &(maze[(*room).row][(*room).col - 1]);
+        return &(maze[(*room).row][(*room).col - 1]); //returns pointer to that room
     }
     else if ((dir == EAST) && (is_in_range(room->row, room->col+1,num_rows,num_cols))) {
         // increase col by 1
-        return &(maze[(*room).row ][(*room).col + 1]);
+        return &(maze[(*room).row ][(*room).col + 1]); // returns pointer to that room
     }
     else {
         return NULL;
@@ -84,11 +82,11 @@ void initialize_maze(int num_rows, int num_cols,
             (maze[i][j]).row = i;
             (maze[i][j]).col = j;
             (maze[i][j]).visited = 0;
-            (maze[i][j]).connections[0] = 8; // value other than 1 or 0
+            (maze[i][j]).connections[0] = 8; // Sets connections to any value other than 1 or 0
             (maze[i][j]).connections[1] = 8;
             (maze[i][j]).connections[2] = 8;
             (maze[i][j]).connections[3] = 8;
-            (maze[i][j]).next = NULL;
+            (maze[i][j]).next = NULL; // sets next room as null
         }
     }
 }

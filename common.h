@@ -20,12 +20,11 @@ typedef enum { NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3 } Direction;
  *    four directions.
  */
 struct maze_room {
-    // Fill in the fields you need
+    // struct for a maze_room in the maze
     int row;
     int col;
     int visited; 
     int connections[4];
-    // NOTE: ignore this field until you start implementing the solver
     struct maze_room *next;
 };
 
