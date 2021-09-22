@@ -14,7 +14,6 @@
  *  - the opposite direction to dir
  */
 Direction get_opposite_dir(Direction dir) {
-    // TODO: implement this function
     if (dir == NORTH) {
         return SOUTH;
     }
@@ -67,21 +66,12 @@ void shuffle_array(Direction directions[]) {
  */
 void drunken_walk(int row, int col, int num_rows, int num_cols,
                   struct maze_room maze[num_rows][num_cols]) {
-    // TODO: implement this function
     struct maze_room *r = &(maze[row][col]);
     r->visited = 1;
-   //shuffle_directions;
     Direction directions[4] = {NORTH, SOUTH, WEST, EAST};
     shuffle_array(directions); 
     for (int i = 0; i < 4; i++) {
-        // int new_row;
-        // int new_col;
-        // if (get_neighbor(num_rows, num_cols, maze, r, directions[i]) == NULL) {
-        //     (*r).connections[directions[i]] = 1;
-        // }
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]); //can return null
-        // new_row = (*new_room).row;
-        // new_col = (*new_room).col;
         if (new_room == NULL) { 
             r->connections[directions[i]] = 1; // stores wall at appropriate index
         }

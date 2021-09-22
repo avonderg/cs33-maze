@@ -250,10 +250,6 @@ int main(int argc, char **argv) {
         }
         #ifdef FULL
         fprintf(path_file, "%s\n", "FULL");
-        // if (fclose(path_file_name)) {
-        //     fprintf(stderr, "[Error Writing to File.]\n");
-        //     return 0; // would i even return something here?
-        // }
         #endif
         #ifndef FULL
         fprintf(path_file, "%s\n", "PRUNED");
@@ -261,6 +257,12 @@ int main(int argc, char **argv) {
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
+        if (!is_in_range(start_row, start_col,num_rows,num_cols)) {
+        return 1;
+        }
+        if (!is_in_range(goal_row, goal_col,num_rows,num_cols)) {
+        return 1;
+        }
         read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
