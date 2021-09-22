@@ -90,14 +90,6 @@ int dfs(int row, int col, int goal_row, int goal_col, int num_rows,
         struct maze_room *new_room = get_neighbor(num_rows, num_cols, maze, r, directions[i]);
         if ((r->connections[directions[i]] == 0) && (new_room->visited == 0)) {
             if (dfs(new_room->row, new_room->col, goal_row, goal_col, num_rows, num_cols, maze, file)) {
-                // #ifdef FULL
-                // int err = 0;
-                // err = fprintf(file, "%d, %d\n", row, col);
-                // if (err <0) {
-                // fprintf(stderr, "Error writing to file.\n");
-                // return 1;
-                // }
-                // #endif
                 r->next = new_room; //pointer to next room
                 return 1;
             }
@@ -167,22 +159,7 @@ int print_pruned_path(struct maze_room *room, FILE *file) {
     }
      room = room->next;
     }
-    // fprintf(file, "%d\t", room->row);
-    // fprintf(file, "%d\n", room->col);
-    // if (fclose(file)) {
-    //     fprintf(stderr, "[Error Writing to File.]\n");
-    //     return 1;
-    // }
     return 0;
-    // if (room == NULL) {
-    //     return 0;
-    // }
-    // int err = 0;
-    // err = fprintf(file, "%d, %d\n", room->row, room->col);
-    // if (err <0) {
-    //    fprintf(stderr, "Error writing to file.\n");
-    //     return 1; 
-    // }
 }
 
 /*

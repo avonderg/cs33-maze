@@ -232,13 +232,14 @@ int main(int argc, char **argv) {
         file_name = argv[1];
         num_rows = atoi(argv[2]);
         num_cols = atoi(argv[3]);
+        if ((num_rows < 1) || (num_cols < 1)) { // if maze is of invalid size
+            return 1;
+        }
         struct maze_room maze[num_rows][num_cols];
         int result[num_rows][num_cols];
-        //int encoded_maze[num_rows][num_cols];
         initialize_maze(num_rows,num_cols,maze);
         drunken_walk(0,0,num_rows,num_cols,maze);
         encode_maze(num_rows,num_cols,maze,result);
-        //write_encoded_maze_to_file(num_rows,num_cols,encoded_maze,file_name);
         return write_encoded_maze_to_file(num_rows,num_cols,result,file_name);
     }
 }
