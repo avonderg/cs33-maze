@@ -256,7 +256,7 @@ int main(int argc, char **argv) {
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
-        if ((start_row <1) && (start_col <1)) { // destination is 'bad'
+        if ((start_row <0) && (start_col <0)) { // destination is 'bad'
             return 1; 
         }
         if ((goal_row <1) && (goal_col <1)) { // destination is 'bad'
