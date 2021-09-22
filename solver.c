@@ -246,6 +246,7 @@ int main(int argc, char **argv) {
         return 1;
         }
         #ifdef FULL
+
         fprintf(path_file, "%s\n", "FULL");
         #endif
         #ifndef FULL
@@ -257,8 +258,10 @@ int main(int argc, char **argv) {
         initialize_maze(num_rows, num_cols, maze);
         if (!is_in_range(start_row, start_col,num_rows,num_cols)) {
         return 1;
+         fprintf(stderr, "Out of bounds\n");
         }
         if (!is_in_range(goal_row, goal_col,num_rows,num_cols)) {
+        fprintf(stderr, "Out of bounds\n");
         return 1;
         }
         // end initializing and error checking
@@ -268,9 +271,10 @@ int main(int argc, char **argv) {
         #ifndef FULL // if pruned
         print_pruned_path(&maze[start_row][start_col],path_file);
         #endif
-        if (fclose(path_file)) {
-        fprintf(stderr, "Could not close file\n");
-        return 1;
+        int close = fclose(path_file);
+        if (close == EOF) {
+            fprintf(stderr, "Could not close file.\n");
+            return 1;
         }
         return 0;
     }
