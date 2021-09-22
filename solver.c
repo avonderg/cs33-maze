@@ -272,14 +272,14 @@ int main(int argc, char **argv) {
         return 1;
         }
         #ifdef FULL
-        fprintf(path_file, "%7s\n", "FULL");
+        fprintf(path_file, "%s\n", "FULL");
         // if (fclose(path_file_name)) {
         //     fprintf(stderr, "[Error Writing to File.]\n");
         //     return 0; // would i even return something here?
         // }
         #endif
         #ifndef FULL
-        fprintf(path_file, "%7s\n", "PRUNED");
+        fprintf(path_file, "%s\n", "PRUNED");
         #endif
         struct maze_room encoded_maze[num_rows][num_cols];
         struct maze_room maze[num_rows][num_cols];
