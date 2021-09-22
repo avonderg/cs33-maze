@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Out of bounds\n");
         return 1;
         }
-        if ((num_rows >1) && (num_cols >1)) { // maze is 'bad'
+        if ((num_rows <1) && (num_cols <1)) { // maze is 'bad'
             return 1; 
         }
         // end initializing and error checking
