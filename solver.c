@@ -271,12 +271,7 @@ int main(int argc, char **argv) {
         struct maze_room maze[num_rows][num_cols];
         initialize_maze(num_rows, num_cols, maze);
         // end initializing and error checking
-        int err;
-        err = read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
-        if (err = 1) {
-            fprintf(stderr, "Error reading from file.\n");
-            return 1;
-        }
+        read_encoded_maze_from_file(num_rows,num_cols,encoded_maze,maze_file_name);
         decode_maze(num_rows,num_cols,maze,encoded_maze);
         dfs(start_row, start_col, goal_row, goal_col, num_rows, num_cols,maze,path_file);
         #ifndef FULL // if pruned
